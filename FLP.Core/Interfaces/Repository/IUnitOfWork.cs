@@ -10,15 +10,15 @@ public interface IUnitOfWork : IDisposable
     /// Saves all changes made in this unit of work to the database.
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>
-    Task<int> SaveChangesAsync();
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     /// <summary>
     /// Begins a new transaction for this unit of work.
     /// </summary>
-    void BeginTransaction();
+    void BeginTransaction(CancellationToken cancellationToken);
     /// <summary>
     /// Commits the current transaction for this unit of work.
     /// </summary>
-    void CommitTransaction();
+    void CommitTransaction(CancellationToken cancellationToken);
     /// <summary>
     /// Rolls back the current transaction for this unit of work.
     /// </summary>

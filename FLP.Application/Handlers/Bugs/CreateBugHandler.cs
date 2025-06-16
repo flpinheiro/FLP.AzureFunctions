@@ -9,10 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace FLP.Application.Handlers.Bugs;
 
-internal class CreateBugHandler (IUnitOfWork _uow, IMapper _mapper, ILogger<CreateBugHandler> _logger) : IRequestHandler<CreateBugRequest, CreateBugReponse>
+public class CreateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<CreateBugHandler> _logger) : IRequestHandler<CreateBugRequest, CreateBugReponse>
 {
     public async Task<CreateBugReponse> Handle(CreateBugRequest request, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Handling CreateBugRequest for Title: {Title}", request.Title);
         // Validate the request
         var validator = new CreateBugValidator();
@@ -22,24 +23,24 @@ internal class CreateBugHandler (IUnitOfWork _uow, IMapper _mapper, ILogger<Crea
             // Handle validation errors
             throw new ArgumentException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
         }
-        // Map the request to a domain entity
-        var bug = _mapper.Map<Bug>(request);
 
-        _uow.BeginTransaction();
         try
         {
+            // Map the request to a domain entity
+            var bug = _mapper.Map<Bug>(request);
+            _uow.BeginTransaction(cancellationToken);
             // Add the bug to the repository
-            var addedBug = await _uow.BugRepository.AddAsync(bug);
-            await _uow.SaveChangesAsync();
-            
+            var addedBug = await _uow.BugRepository.AddAsync(bug, cancellationToken);
+            await _uow.SaveChangesAsync(cancellationToken);
+
             // Map the added bug to a response DTO
             var response = _mapper.Map<CreateBugReponse>(addedBug);
 
             // Commit the transaction
-            _uow.CommitTransaction();
-            
+            _uow.CommitTransaction(cancellationToken);
+
             _logger.LogInformation("Bug created successfully with ID: {Id}", response.Id);
-            
+
             return response;
         }
         catch (Exception ex)

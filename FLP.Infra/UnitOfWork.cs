@@ -13,15 +13,17 @@ internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, La
 
 
     #region transaction
-    public void BeginTransaction()
+    public void BeginTransaction(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Beginning a new transaction.");
         _transaction = _context.Database.BeginTransaction();
         _logger.LogInformation($"Transaction started successfully with Tansaction Id: {_transaction.TransactionId}");
     }
 
-    public void CommitTransaction()
+    public void CommitTransaction(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation($"Committing the current transaction with Tansaction Id: {_transaction?.TransactionId}");
         _context.Database.CommitTransaction();
         _logger.LogInformation($"Transaction committed successfully with Tansaction Id: {_transaction?.TransactionId}");
@@ -34,8 +36,9 @@ internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, La
         _logger.LogWarning($"Transaction rolled back successfully with Tansaction Id: {_transaction?.TransactionId}");
     }
 
-    public Task<int> SaveChangesAsync()
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Saving changes to the database.");
         // This will save all changes made in the context to the database
         // and return the number of state entries written to the database.
