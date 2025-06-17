@@ -8,5 +8,21 @@
             },
             "enableLiveMetricsFilters": true
         }
+    },
+    "extensions": {
+        "openApi": {
+            "info": {
+                "title": "My API",
+                "version": "1.0.0",
+                "description": "This is my Azure Function API with Swagger support."
+            }//,
+            //"servers": [
+            //    {
+            //        "url": "https://my-function-app.azurewebsites.net",
+            //        "description": "Production"
+            //    }
+            //]
+        }
     }
+
 }

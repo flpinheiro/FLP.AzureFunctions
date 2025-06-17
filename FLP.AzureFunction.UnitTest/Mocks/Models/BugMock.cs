@@ -16,6 +16,11 @@ internal class BugMock : BasicMock<Bug>
             .RuleFor(x => x.ResolvedAt, (f, c) => c.Status == BugStatus.Resolved ? f.Date.Recent() : null)
             .RuleFor(x => x.CreatedAt, f => f.Date.Recent());
     }
+    public BugMock WithId(Guid id)
+    {
+        Faker.RuleFor(x => x.Id, id);
+        return this;
+    }
 
     public BugMock WithTitle(string title)
     {

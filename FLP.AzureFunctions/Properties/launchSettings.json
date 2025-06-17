@@ -3,7 +3,9 @@
     "FLP.AzureFunctions": {
       "commandName": "Project",
       "commandLineArgs": "--port 7110",
-      "launchBrowser": false
+        "launchBrowser": true,
+        "launchUrl": "api/swagger/ui"
+
     }
   }
 }

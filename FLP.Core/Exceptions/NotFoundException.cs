@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FLP.Application.Requests.Bugs;
+namespace FLP.Core.Exceptions;
 
-internal class BugRequest
-{
-}
+public class NotFoundException(string message) : Exception(message);

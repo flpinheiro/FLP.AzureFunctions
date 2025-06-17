@@ -11,5 +11,6 @@ public class BugProfile : Profile
     {
         CreateMap<CreateBugRequest, Bug>();
         CreateMap<Bug, CreateBugReponse>();
+        CreateMap<Bug, GetBugByIdResponse>();
     }
 }

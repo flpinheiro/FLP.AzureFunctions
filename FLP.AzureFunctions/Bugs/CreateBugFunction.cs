@@ -9,17 +9,20 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
 using FLP.AzureFunctions.Extensions;
+using FLP.Application.Responses.Bugs;
+using System.Net;
 
 namespace FLP.AzureFunctions.Bugs;
 
 public class CreateBugFunction(ILogger<CreateBugFunction> _logger, IMediator _mediator)
 {
-    [Function("CreateBugFunction")]
+    [Function(nameof(CreateBugFunction))]
     [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateBugRequest), Required = true, Example = typeof(CreateBugRequestExample))]
-    public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req, CancellationToken cancellationToken)
+    [OpenApiResponseWithBody(contentType: "application/json", bodyType: typeof(CreateBugReponse), statusCode: HttpStatusCode.OK, Description = "The bug were Created successfully.")]
+    public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "Bug")] HttpRequest req, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
-        var request = req.DeserializeRequestBody<CreateBugRequest>();
+        _logger.LogInformation("C# HTTP trigger function processed a create bug request.");
+        var request = await req.DeserializeRequestBodyAsync<CreateBugRequest>();
         if (request == null)
         {
             _logger.LogError("Deserialization of request body failed.");

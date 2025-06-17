@@ -5,7 +5,7 @@ namespace FLP.AzureFunctions.Extensions;
 
 internal static class HttpRequestExtensions
 {
-    public static async Task<T?> DeserializeRequestBody<T>(this HttpRequest req)
+    public static async Task<T?> DeserializeRequestBodyAsync<T>(this HttpRequest req)
     {
         var body = req.Body;
         if (body == null)

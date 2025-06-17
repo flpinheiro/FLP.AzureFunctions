@@ -1,17 +1,13 @@
 ﻿@FLP.AzureFunctions_HostAddress = http://localhost:7110
 
-### Get Function1
-
-GET {{FLP.AzureFunctions_HostAddress}}/api/Function1
-
 ### Create Bug Function
 
-POST {{FLP.AzureFunctions_HostAddress}}/api/CreateBugFunction
+POST {{FLP.AzureFunctions_HostAddress}}/api/Bug
 {
-    "title": "Sample Bug",
-    "description": "This is a sample bug description.",
-    "severity": "High",
+    "Title": "Sample Bug",
+    "Description": "This is a sample bug description.",
+    "Severity": "High",
 
 }
-
-###
+### Get Bug By Id
+GET {{FLP.AzureFunctions_HostAddress}}/api/Bug/39da6728-8629-46cd-682b-08ddaab3d5be

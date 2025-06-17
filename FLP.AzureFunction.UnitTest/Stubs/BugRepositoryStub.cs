@@ -50,7 +50,7 @@ internal class BugRepositoryStub
         Stub.Verify(x => x.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), times);
         return this;
     }
-    public BugRepositoryStub SetupGetByIdAsync(Bug bug)
+    public BugRepositoryStub SetupGetByIdAsync(Bug? bug = null)
     {
         Stub.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(bug).Verifiable();

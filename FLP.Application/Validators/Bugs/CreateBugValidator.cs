@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FLP.Application.Requests.Bugs;
+﻿using FLP.Application.Requests.Bugs;
 using FluentValidation;
 
 namespace FLP.Application.Validators.Bugs;
@@ -27,10 +22,6 @@ internal class CreateBugValidator : AbstractValidator<CreateBugRequest>
             .WithMessage("Description must not exceed 500 characters.")
             .NotEmpty()
             .WithMessage("Description is required.");
-
-        //RuleFor(f => f.AssignedToUserId)
-        //    .Must(id => id == null || id != Guid.Empty)
-        //    .WithMessage("AssignedToUserId must be a valid GUID or null. If provided, it cannot be an empty GUID.");
 
     }
 }
