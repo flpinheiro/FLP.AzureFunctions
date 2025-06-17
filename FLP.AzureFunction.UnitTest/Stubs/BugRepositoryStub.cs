@@ -1,4 +1,5 @@
 ﻿using FLP.Core.Context.Main;
+using FLP.Core.Context.Query;
 using FLP.Core.Interfaces.Repository;
 using Moq;
 
@@ -67,38 +68,38 @@ internal class BugRepositoryStub
         Stub.Verify(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), times);
         return this;
     }
-    public BugRepositoryStub SetupGetAllAsync(IEnumerable<Bug> bugs)
+    public BugRepositoryStub SetupGetAsync(IEnumerable<Bug> bugs)
     {
-        Stub.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+        Stub.Setup(x => x.GetAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(bugs).Verifiable();
         return this;
     }
-    public BugRepositoryStub SetupGetAllAsync(Exception ex)
+    public BugRepositoryStub SetupGetAsync(Exception ex)
     {
-        Stub.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+        Stub.Setup(x => x.GetAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()))
             .Throws(() => ex);
         return this;
     }
-    public BugRepositoryStub VerifyGetAllAsync(Times times)
+    public BugRepositoryStub VerifyGetAsync(Times times)
     {
-        Stub.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()), times);
+        Stub.Verify(x => x.GetAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()), times);
         return this;
     }
-    public BugRepositoryStub SetupGetByStatusAsync(IEnumerable<Bug> bugs)
+    public BugRepositoryStub SetupCountAsync(int count)
     {
-        Stub.Setup(x => x.GetByStatusAsync(It.IsAny<FLP.Core.Context.Constants.BugStatus>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(bugs).Verifiable();
+        Stub.Setup(x => x.CountAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(count).Verifiable();
         return this;
     }
-    public BugRepositoryStub SetupGetByStatusAsync(Exception ex)
+    public BugRepositoryStub SetupCountAsync(Exception ex)
     {
-        Stub.Setup(x => x.GetByStatusAsync(It.IsAny<FLP.Core.Context.Constants.BugStatus>(), It.IsAny<CancellationToken>()))
+        Stub.Setup(x => x.CountAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()))
             .Throws(() => ex);
         return this;
     }
-    public BugRepositoryStub VerifyGetByStatusAsync(Times times)
+    public BugRepositoryStub VerifyCountAsync(Times times)
     {
-        Stub.Verify(x => x.GetByStatusAsync(It.IsAny<FLP.Core.Context.Constants.BugStatus>(), It.IsAny<CancellationToken>()), times);
+        Stub.Verify(x => x.CountAsync(It.IsAny<PaginatedBugQuery>(), It.IsAny<CancellationToken>()), times);
         return this;
     }
     public BugRepositoryStub SetupUpdateAsync(Bug bug)

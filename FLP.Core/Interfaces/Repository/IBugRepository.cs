@@ -1,5 +1,7 @@
 ﻿using FLP.Core.Context.Constants;
 using FLP.Core.Context.Main;
+using FLP.Core.Context.Query;
+using FLP.Core.Context.Shared;
 
 namespace FLP.Core.Interfaces.Repository;
 
@@ -29,15 +31,16 @@ public interface IBugRepository
     /// <returns>The retrieved bug.</returns>
     Task<Bug?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     /// <summary>
-    /// Gets all bugs in the repository.
+    /// Gets all bugs in the repository, paginated according to the provided query parameters.
     /// </summary>
     /// <returns>A list of all bugs.</returns>
-    Task<IEnumerable<Bug>> GetAllAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<Bug>> GetAsync(PaginatedBugQuery query,CancellationToken cancellationToken);
 
     /// <summary>
-    /// Gets all bugs with the specified status.
+    /// count all bugs in the repository, paginated according to the provided query parameters.
     /// </summary>
-    /// <param name="status"></param>
+    /// <param name="query"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IEnumerable<Bug>> GetByStatusAsync(BugStatus status, CancellationToken cancellationToken);
+    Task<int> CountAsync(PaginatedBugQuery query, CancellationToken cancellationToken);
 }

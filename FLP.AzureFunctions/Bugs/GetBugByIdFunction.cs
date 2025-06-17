@@ -32,9 +32,9 @@ public class GetBugByIdFunction(ILogger<GetBugByIdFunction> _logger, IMediator _
             _logger.LogError(ex, "Bug not found.");
             return new NotFoundObjectResult("Bug not found.");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _logger.LogError("An error occurred while processing the request.");
+            _logger.LogError("An error occurred while processing the request.", ex);
             return new BadRequestObjectResult("An error occurred while processing the request.");
         }
     }

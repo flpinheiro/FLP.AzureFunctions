@@ -10,4 +10,11 @@ POST {{FLP.AzureFunctions_HostAddress}}/api/Bug
 
 }
 ### Get Bug By Id
+
 GET {{FLP.AzureFunctions_HostAddress}}/api/Bug/39da6728-8629-46cd-682b-08ddaab3d5be
+
+### Get paginated Bug
+
+GET {{FLP.AzureFunctions_HostAddress}}/api/Bug?page=1&pagesize=10
+
+###

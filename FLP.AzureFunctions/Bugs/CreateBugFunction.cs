@@ -39,9 +39,9 @@ public class CreateBugFunction(ILogger<CreateBugFunction> _logger, IMediator _me
             _logger.LogError(ex, "Validation error occurred while processing the request.");
             return new BadRequestObjectResult(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _logger.LogError("An error occurred while processing the request.");
+            _logger.LogError("An error occurred while processing the request.", ex);
             return new BadRequestObjectResult("An error occurred while processing the request.");
         }
     }

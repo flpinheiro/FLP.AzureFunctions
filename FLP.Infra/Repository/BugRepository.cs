@@ -1,5 +1,7 @@
 ﻿using FLP.Core.Context.Constants;
 using FLP.Core.Context.Main;
+using FLP.Core.Context.Query;
+using FLP.Core.Context.Shared;
 using FLP.Core.Interfaces.Repository;
 using FLP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +15,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
     {
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Adding a new bug with Title: {Title}", bug.Title);
-        await _context.Bugs.AddAsync(bug);
+        await _context.Bugs.AddAsync(bug, cancellationToken);
         _logger.LogInformation("Bug with ID: {Id} added successfully.", bug.Id);
         return bug;
     }
@@ -22,7 +24,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
     {
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Deleting bug with ID: {Id}", id);
-        var bug = await _context.Bugs.FindAsync(id);
+        var bug = await _context.Bugs.FindAsync(id, cancellationToken);
         if (bug != null)
         {
             _context.Bugs.Remove(bug);
@@ -35,28 +37,42 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
         }
     }
 
-    public async Task<IEnumerable<Bug>> GetAllAsync(CancellationToken cancellationToken)
+    private IQueryable<Bug> FilterBugsQuery(PaginatedBugQuery query)
+    {
+        var queryable = _context.Bugs.OrderBy(x => x.CreatedAt).AsQueryable();
+        if (!string.IsNullOrEmpty(query.Query))
+        {
+            queryable = queryable.Where(x =>
+            (x.Title != null && x.Title.Contains(query.Query)) || (x.Description != null && x.Description.Contains(query.Query)));
+        }
+        if (query.Status.HasValue)
+        {
+            queryable = queryable.Where(x => x.Status == query.Status);
+        }
+        return queryable;
+    }
+    public async Task<IEnumerable<Bug>> GetAsync(PaginatedBugQuery query, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Retrieving all bugs from the repository.");
-        return await _context.Bugs.ToListAsync();
+        return await FilterBugsQuery(query)
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToListAsync(cancellationToken);
+    }
 
+    public async Task<int> CountAsync(PaginatedBugQuery query, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        _logger.LogInformation("Counting all bugs in the repository.");
+        return await FilterBugsQuery(query).CountAsync(cancellationToken);
     }
 
     public async Task<Bug?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Retrieving bug with ID: {Id}", id);
-        return await _context.Bugs.FindAsync(id);
-    }
-
-    public async Task<IEnumerable<Bug>> GetByStatusAsync(BugStatus status, CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        _logger.LogInformation("Retrieving bugs with status: {Status}", status);
-        return await _context.Bugs
-            .Where(b => b.Status == status)
-            .ToListAsync();
+        return await _context.Bugs.FindAsync(id, cancellationToken);
     }
 
     public async Task<Bug> UpdateAsync(Bug bug, CancellationToken cancellationToken)
