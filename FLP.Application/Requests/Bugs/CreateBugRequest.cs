@@ -3,7 +3,7 @@ using MediatR;
 
 namespace FLP.Application.Requests.Bugs;
 
-public record CreateBugRequest: IRequest<CreateBugReponse>
+public record CreateBugRequest : IRequest<CreateBugReponse>
 {
     public string Title { get; set; }
     public string Description { get; set; }

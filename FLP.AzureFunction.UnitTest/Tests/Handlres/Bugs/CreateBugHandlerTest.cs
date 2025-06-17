@@ -10,7 +10,7 @@ using Moq;
 
 namespace FLP.AzureFunction.UnitTest.Tests.Handlres.Bugs;
 
-public class CreateBugHandlerTest 
+public class CreateBugHandlerTest
 {
     private readonly UnitOfWorkStub _stubs = new UnitOfWorkStub();
     private readonly Mock<ILogger<CreateBugHandler>> _logger = new Mock<ILogger<CreateBugHandler>>();
@@ -23,7 +23,7 @@ public class CreateBugHandlerTest
         _mapper = IMapperStub.GetMapper(
             new BugProfile()
         );
-        _handler =new CreateBugHandler(_stubs.Object, _mapper, _logger.Object);
+        _handler = new CreateBugHandler(_stubs.Object, _mapper, _logger.Object);
     }
 
     [Fact]

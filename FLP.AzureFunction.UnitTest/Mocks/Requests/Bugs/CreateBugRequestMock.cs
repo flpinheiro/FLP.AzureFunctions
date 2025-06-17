@@ -2,7 +2,7 @@
 
 namespace FLP.AzureFunction.UnitTest.Mocks.Requests.Bugs;
 
-internal class CreateBugRequestMock: BasicMock<CreateBugRequest>
+internal class CreateBugRequestMock : BasicMock<CreateBugRequest>
 {
     public CreateBugRequestMock()
     {

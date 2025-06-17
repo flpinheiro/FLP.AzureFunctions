@@ -1,16 +1,16 @@
+using System.Net;
 using FLP.Application.Requests.Bugs;
+using FLP.Application.Responses.Bugs;
+using FLP.AzureFunctions.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
-using FLP.AzureFunctions.Extensions;
-using FLP.Application.Responses.Bugs;
-using System.Net;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace FLP.AzureFunctions.Bugs;
 
@@ -34,7 +34,7 @@ public class CreateBugFunction(ILogger<CreateBugFunction> _logger, IMediator _me
             var response = await _mediator.Send(request, cancellationToken);
             return new OkObjectResult(response);
         }
-        catch(ArgumentException ex)
+        catch (ArgumentException ex)
         {
             _logger.LogError(ex, "Validation error occurred while processing the request.");
             return new BadRequestObjectResult(ex.Message);

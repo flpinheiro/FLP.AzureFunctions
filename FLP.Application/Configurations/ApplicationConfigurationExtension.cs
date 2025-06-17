@@ -15,7 +15,7 @@ public static class ApplicationConfigurationExtension
         // Add other application-specific configurations as needed
         //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationConfigurationExtension).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ApplicationConfiguration>());
-        
+
 
         services.AddAutoMapper(typeof(ApplicationConfiguration).Assembly);
 

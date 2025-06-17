@@ -21,7 +21,7 @@ internal class BugRepositoryStub
             .Verifiable();
         return this;
     }
-    public BugRepositoryStub SetupAddAsync(Exception ex )
+    public BugRepositoryStub SetupAddAsync(Exception ex)
     {
         Stub.Setup(x => x.AddAsync(It.IsAny<Bug>(), It.IsAny<CancellationToken>()))
             .Throws(() => ex);

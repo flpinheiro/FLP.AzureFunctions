@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FLP.Core.Interfaces.Repository;
+﻿using FLP.Core.Interfaces.Repository;
 using FLP.Infra.Data;
 using FLP.Infra.Repository;
 using Microsoft.EntityFrameworkCore;

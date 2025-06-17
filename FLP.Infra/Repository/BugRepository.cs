@@ -40,7 +40,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Retrieving all bugs from the repository.");
         return await _context.Bugs.ToListAsync();
-        
+
     }
 
     public async Task<Bug?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -63,7 +63,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
     {
         cancellationToken.ThrowIfCancellationRequested();
         _logger.LogInformation("Updating bug with ID: {Id}", bug.Id);
-        await Task.FromResult( _context.Bugs.Update(bug));
+        await Task.FromResult(_context.Bugs.Update(bug));
         _logger.LogInformation("Bug with ID: {Id} updated successfully.", bug.Id);
         return bug;
     }

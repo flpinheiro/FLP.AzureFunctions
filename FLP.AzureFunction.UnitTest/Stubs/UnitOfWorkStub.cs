@@ -3,7 +3,7 @@ using Moq;
 
 namespace FLP.AzureFunction.UnitTest.Stubs;
 
-internal class UnitOfWorkStub 
+internal class UnitOfWorkStub
 {
     public IUnitOfWork Object => Stub.Object;
     private Mock<IUnitOfWork> Stub { get; }

@@ -29,12 +29,12 @@ public class GetBugByIdHandlerTest
         // Arrange
         var request = new GetBugByIdRequestMock().Generate();
         var bug = new BugMock().WithId(request.Id).Generate();
-        
+
         _stubs.BugRepository.SetupGetByIdAsync(bug);
 
         // Act
         var result = await _handler.Handle(request, CancellationToken.None);
-        
+
         //// Assert
         Assert.NotNull(result);
         Assert.Equal(request.Id, result.Id);

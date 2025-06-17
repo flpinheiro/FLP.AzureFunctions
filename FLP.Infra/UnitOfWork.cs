@@ -43,7 +43,7 @@ internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, La
         // This will save all changes made in the context to the database
         // and return the number of state entries written to the database.
         return _context.SaveChangesAsync();
-    } 
+    }
     #endregion
 
     #region Dispose
@@ -78,6 +78,6 @@ internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, La
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
-    } 
+    }
     #endregion
 }

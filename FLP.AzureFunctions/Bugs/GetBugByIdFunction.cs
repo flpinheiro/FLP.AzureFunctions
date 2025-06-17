@@ -1,5 +1,4 @@
 using System.Net;
-using System.Threading.Tasks;
 using FLP.Application.Responses.Bugs;
 using FLP.Core.Exceptions;
 using MediatR;
