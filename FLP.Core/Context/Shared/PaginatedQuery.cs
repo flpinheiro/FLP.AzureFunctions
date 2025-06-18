@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FLP.Core.Context.Shared;
+﻿namespace FLP.Core.Context.Shared;
 
 public record PaginatedQuery
 {

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace FLP.Application.Validators.Bugs;
 
-internal class GetBugByIdValidator : AbstractValidator<GetBugByIdRequest>
+internal class DeleteBugValidator : AbstractValidator<DeleteBugRequest>
 {
-    public GetBugByIdValidator()
+    public DeleteBugValidator()
     {
         RuleFor(f => f.Id)
             .NotEmpty()

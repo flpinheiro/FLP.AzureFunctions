@@ -21,7 +21,7 @@ public class CreateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<CreateB
         if (!validationResult.IsValid)
         {
             // Handle validation errors
-            throw new ArgumentException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
+            throw new ArgumentException("Validation failed: " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), nameof(request));
         }
 
         try

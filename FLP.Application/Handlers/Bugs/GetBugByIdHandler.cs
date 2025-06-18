@@ -30,7 +30,7 @@ public class GetBugByIdHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBug
         if (!validationResult.IsValid)
         {
             // Handle validation errors
-            throw new ArgumentException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
+            throw new ArgumentException("Validation failed: " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), nameof(request));
         }
 
         var bug = await _uow.BugRepository.GetByIdAsync(request.Id, cancellationToken);

@@ -1,9 +1,7 @@
 using System.Net;
-using System.Threading.Tasks;
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.Core.Context.Constants;
-using Grpc.Core;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
