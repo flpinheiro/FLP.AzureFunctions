@@ -1,5 +1,5 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace FLP.AzureFunctions.Extensions;
 
@@ -19,6 +19,8 @@ internal static class HttpRequestExtensions
             AllowTrailingCommas = true,
             AllowOutOfOrderMetadataProperties = true,
             PropertyNameCaseInsensitive = true,
+            Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() },
+            ReadCommentHandling = JsonCommentHandling.Skip,
         };
         var request = JsonSerializer.Deserialize<T>(requestBody, options);
         return request;

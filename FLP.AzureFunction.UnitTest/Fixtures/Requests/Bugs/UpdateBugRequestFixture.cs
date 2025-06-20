@@ -2,12 +2,12 @@
 
 namespace FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
 
-internal class UpdateBugRequestFixture: BasicFixture<UpdateBugRequest>
+internal class UpdateBugRequestFixture : BasicFixture<UpdateBugRequest>
 {
     public UpdateBugRequestFixture()
     {
         Faker
-            .RuleFor(x => x.Id, f=> f.Random.Guid())
+            .RuleFor(x => x.Id, f => f.Random.Guid())
             .RuleFor(x => x.Title, f => f.Lorem.Sentence(3))
             .RuleFor(x => x.Description, f => f.Lorem.Sentences())
             .RuleFor(x => x.Status, f => f.PickRandom<Core.Context.Constants.BugStatus>())

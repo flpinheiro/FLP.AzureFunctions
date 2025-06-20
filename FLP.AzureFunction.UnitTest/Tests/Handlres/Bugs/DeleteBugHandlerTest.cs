@@ -1,6 +1,7 @@
 ﻿using FLP.Application.Handlers.Bugs;
 using FLP.Application.Requests.Bugs;
 using FLP.AzureFunction.UnitTest.Mocks;
+using FLP.Core.Exceptions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -45,13 +46,13 @@ public class DeleteBugHandlerTest
 
     [Theory]
     [InlineData(typeof(Exception))]
-    [InlineData(typeof(KeyNotFoundException))]
+    [InlineData(typeof(NotFoundException))]
     public async Task Run_DeleteBug_Throw_Exception_Async(Type type)
     {
         // Arrange
         var ex = type.GetConstructor(Type.EmptyTypes)?.Invoke(null) as Exception ?? throw new InvalidOperationException("Could not create exception instance.");
         var bugId = Guid.NewGuid();
-        
+
         _uow.BugRepository.SetupDeleteAsync(ex);
 
         _uow.SetupBeginTransaction()

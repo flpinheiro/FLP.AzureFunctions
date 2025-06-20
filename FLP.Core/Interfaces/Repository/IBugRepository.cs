@@ -1,7 +1,5 @@
-﻿using FLP.Core.Context.Constants;
-using FLP.Core.Context.Main;
+﻿using FLP.Core.Context.Main;
 using FLP.Core.Context.Query;
-using FLP.Core.Context.Shared;
 
 namespace FLP.Core.Interfaces.Repository;
 
@@ -34,7 +32,7 @@ public interface IBugRepository
     /// Gets all bugs in the repository, paginated according to the provided query parameters.
     /// </summary>
     /// <returns>A list of all bugs.</returns>
-    Task<IEnumerable<Bug>> GetAsync(PaginatedBugQuery query,CancellationToken cancellationToken);
+    Task<IEnumerable<Bug>> GetAsync(PaginatedBugQuery query, CancellationToken cancellationToken);
 
     /// <summary>
     /// count all bugs in the repository, paginated according to the provided query parameters.

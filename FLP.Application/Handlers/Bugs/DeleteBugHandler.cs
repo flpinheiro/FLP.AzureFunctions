@@ -1,5 +1,6 @@
 ﻿using FLP.Application.Requests.Bugs;
 using FLP.Application.Validators.Bugs;
+using FLP.Core.Exceptions;
 using FLP.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,7 @@ public class DeleteBugHandler(IUnitOfWork _uow, /*IMapper _mapper,*/ ILogger<Del
 
         var validator = new DeleteBugValidator();
         var validationResult = validator.Validate(request);
-        
+
         if (!validationResult.IsValid)
         {
             throw new ArgumentException("Validation failed: " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), nameof(request));
@@ -48,7 +49,7 @@ public class DeleteBugHandler(IUnitOfWork _uow, /*IMapper _mapper,*/ ILogger<Del
             _uow.CommitTransaction(cancellationToken);
 
         }
-        catch (KeyNotFoundException)
+        catch (NotFoundException)
         {
             _logger.LogWarning("Bug with ID: {BugId} not found for deletion.", request.Id);
             // Rollback the transaction if the bug was not found

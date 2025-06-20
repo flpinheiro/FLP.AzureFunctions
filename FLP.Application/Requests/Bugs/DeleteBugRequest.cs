@@ -2,4 +2,4 @@
 
 namespace FLP.Application.Requests.Bugs;
 
-public record DeleteBugRequest(Guid Id): IRequest;
+public record DeleteBugRequest(Guid Id) : IRequest;

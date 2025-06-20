@@ -1,5 +1,4 @@
 ﻿using FLP.Application.Responses.Bugs;
-using FLP.AzureFunction.UnitTest.Fixtures;
 using FLP.Core.Context.Constants;
 
 namespace FLP.AzureFunction.UnitTest.Fixtures.Responses.Bugs;

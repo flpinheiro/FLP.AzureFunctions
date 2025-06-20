@@ -1,5 +1,6 @@
 ﻿using FLP.Core.Context.Main;
 using FLP.Core.Context.Query;
+using FLP.Core.Exceptions;
 using FLP.Core.Interfaces.Repository;
 using FLP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
         else
         {
             _logger.LogWarning("Bug with ID: {Id} not found for deletion.", id);
-            throw new KeyNotFoundException($"Bug with ID {id} not found.");
+            throw new NotFoundException($"Bug with ID {id} not found.");
         }
     }
 

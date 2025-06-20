@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FLP.Application.Requests.Bugs;
+﻿using FLP.Application.Requests.Bugs;
 using FluentValidation;
 
 namespace FLP.Application.Validators.Bugs;
 
-internal class UpdateBugValidator :AbstractValidator<UpdateBugRequest>
+internal class UpdateBugValidator : AbstractValidator<UpdateBugRequest>
 {
     public UpdateBugValidator()
     {

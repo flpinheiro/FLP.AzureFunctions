@@ -1,4 +1,3 @@
-using System.Net;
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.Core.Context.Constants;
@@ -9,6 +8,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System.Net;
 
 namespace FLP.AzureFunctions.Bugs;
 
@@ -20,9 +20,9 @@ public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediat
     [OpenApiParameter("Query", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "Query for search")]
     [OpenApiParameter("Status", In = ParameterLocation.Query, Required = false, Type = typeof(BugStatus), Description = "Bug Status for search")]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(GetBugsResponse), Description = "The response message")]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Bug")] HttpRequest req, CancellationToken cancellationToken)
+    public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Bug")] HttpRequest req, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a paginated bug request.");
+        _logger.LogInformation("C# HTTP trigger function processed a paginated bug request.", req);
         try
         {
             req.Query.TryGetValue("Page", out var page);
@@ -42,10 +42,15 @@ public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediat
 
             return new OkObjectResult(response);
         }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Validation error occurred while processing the request.");
+            return new BadRequestObjectResult(ex.Message);
+        }
         catch (Exception ex)
         {
             _logger.LogError("An error occurred while processing the request.", ex);
-            return new BadRequestObjectResult("an error ocured while processing the request.");
+            return new BadRequestObjectResult("An error occurred while processing the request.");
         }
     }
 

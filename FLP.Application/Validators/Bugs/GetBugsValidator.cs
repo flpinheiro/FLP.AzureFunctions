@@ -16,4 +16,4 @@ internal class GetBugsValidator : AbstractValidator<GetBugsRequest>
             .LessThan(100)
             .WithMessage("Page size must be less than 100");
     }
-}   
+}

@@ -2,6 +2,7 @@
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.Application.Validators.Bugs;
+using FLP.Core.Exceptions;
 using FLP.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ public class UpdateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<UpdateB
             if (bug == null)
             {
                 _logger.LogWarning("Bug with ID: {BugId} not found for update.", request.Id);
-                throw new KeyNotFoundException($"Bug with ID {request.Id} not found.");
+                throw new NotFoundException($"Bug with ID {request.Id} not found.");
             }
             // Map the request to the bug entity
             bug.Title = request.Title ?? bug.Title;
