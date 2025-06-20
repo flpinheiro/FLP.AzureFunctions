@@ -1,11 +1,11 @@
 ﻿using FLP.Core.Context.Constants;
 using FLP.Core.Context.Main;
 
-namespace FLP.AzureFunction.UnitTest.Mocks.Models;
+namespace FLP.AzureFunction.UnitTest.Fixtures.Models;
 
-internal class BugMock : BasicMock<Bug>
+internal class BugFixture : BasicFixture<Bug>
 {
-    public BugMock()
+    public BugFixture()
     {
         Faker
             .RuleFor(x => x.Id, f => f.Random.Guid())
@@ -16,31 +16,31 @@ internal class BugMock : BasicMock<Bug>
             .RuleFor(x => x.ResolvedAt, (f, c) => c.Status == BugStatus.Resolved ? f.Date.Recent() : null)
             .RuleFor(x => x.CreatedAt, f => f.Date.Recent());
     }
-    public BugMock WithId(Guid id)
+    public BugFixture WithId(Guid id)
     {
         Faker.RuleFor(x => x.Id, id);
         return this;
     }
 
-    public BugMock WithTitle(string title)
+    public BugFixture WithTitle(string title)
     {
         Faker.RuleFor(x => x.Title, title);
         return this;
     }
 
-    public BugMock WithDescription(string description)
+    public BugFixture WithDescription(string description)
     {
         Faker.RuleFor(x => x.Description, description);
         return this;
     }
 
-    public BugMock WithAssignedToUserId(Guid? assignedToUserId)
+    public BugFixture WithAssignedToUserId(Guid? assignedToUserId)
     {
         Faker.RuleFor(x => x.AssignedToUserId, assignedToUserId);
         return this;
     }
 
-    public BugMock WithStatus(BugStatus status)
+    public BugFixture WithStatus(BugStatus status)
     {
         Faker.RuleFor(x => x.Status, status);
         return this;

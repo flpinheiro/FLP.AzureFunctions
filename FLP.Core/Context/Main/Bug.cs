@@ -23,7 +23,7 @@ public class Bug : BasicModel<Guid>
     {
         Status = newStatus;
         // Automatically set ResolvedAt when status changes to Resolved
-        if (newStatus == BugStatus.Resolved)
+        if (IsBugResolvedOrClosed(newStatus))
         {
             ResolvedAt = DateTime.UtcNow; // Set resolved time when status is changed to Resolved
         }
@@ -31,5 +31,22 @@ public class Bug : BasicModel<Guid>
         {
             ResolvedAt = null; // Clear resolved time for statuses other than Resolved
         }
+    }
+
+    /// <summary>
+    /// Checks if the bug status is either Resolved or Closed.
+    /// </summary>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public static bool IsBugResolvedOrClosed(BugStatus status)
+        => status == BugStatus.Resolved || status == BugStatus.Closed;
+
+    /// <summary>
+    /// Checks if the current bug status is either Resolved or Closed.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsBugResolvedOrClosed()
+    {
+        return IsBugResolvedOrClosed(Status);
     }
 }

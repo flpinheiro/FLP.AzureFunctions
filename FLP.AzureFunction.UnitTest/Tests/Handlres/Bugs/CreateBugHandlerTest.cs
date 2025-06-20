@@ -2,8 +2,9 @@
 using FLP.Application.Handlers.Bugs;
 using FLP.Application.Profiles;
 using FLP.Application.Responses.Bugs;
-using FLP.AzureFunction.UnitTest.Mocks.Models;
-using FLP.AzureFunction.UnitTest.Mocks.Requests.Bugs;
+using FLP.AzureFunction.UnitTest.Fixtures.Models;
+using FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
+using FLP.AzureFunction.UnitTest.Mocks;
 using FLP.AzureFunction.UnitTest.Stubs;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -12,8 +13,8 @@ namespace FLP.AzureFunction.UnitTest.Tests.Handlres.Bugs;
 
 public class CreateBugHandlerTest
 {
-    private readonly UnitOfWorkStub _stubs = new UnitOfWorkStub();
-    private readonly Mock<ILogger<CreateBugHandler>> _logger = new Mock<ILogger<CreateBugHandler>>();
+    private readonly UnitOfWorkMock _uow = new();
+    private readonly Mock<ILogger<CreateBugHandler>> _logger = new();
     private readonly IMapper _mapper;
 
     private readonly CreateBugHandler _handler;
@@ -23,20 +24,20 @@ public class CreateBugHandlerTest
         _mapper = IMapperStub.GetMapper(
             new BugProfile()
         );
-        _handler = new CreateBugHandler(_stubs.Object, _mapper, _logger.Object);
+        _handler = new CreateBugHandler(_uow.Object, _mapper, _logger.Object);
     }
 
     [Fact]
     public async Task Run_CreateBugHandler_return_OK_Async()
     {
         //arrange
-        var request = new CreateBugRequestMock().Generate();
-        var bug = new BugMock().Generate();
+        var request = new CreateBugRequestFixture().Generate();
+        var bug = new BugFixture().Generate();
 
-        _stubs.BugRepository
+        _uow.BugRepository
             .SetupAddAsync(bug);
 
-        _stubs
+        _uow
             .SetupBeginTransaction()
             .SetupCommitTransaction()
             .SetupSaveChangesAsync();
@@ -53,8 +54,8 @@ public class CreateBugHandlerTest
         Assert.Equal(bug.AssignedToUserId, response.AssignedToUserId);
         Assert.Equal(bug.Status, response.Status);
 
-        _stubs.BugRepository.VerifyAddAsync(Times.Once());
-        _stubs
+        _uow.BugRepository.VerifyAddAsync(Times.Once());
+        _uow
             .VerifyBeginTransaction(Times.Once())
             .VerifyCommitTransaction(Times.Once())
             .VerifySaveChangesAsync(Times.Once())
@@ -65,7 +66,7 @@ public class CreateBugHandlerTest
     public async Task Run_CreateBugHandler_Validation_Fail_Async()
     {
         //arrange
-        var request = new CreateBugRequestMock()
+        var request = new CreateBugRequestFixture()
             .WithTitle(null) // Invalid title
             .WithDescription(null) // Invalid description
             .Generate();
@@ -77,8 +78,8 @@ public class CreateBugHandlerTest
         Assert.NotNull(response);
         Assert.NotEmpty(response.Message);
 
-        _stubs.BugRepository.VerifyAddAsync(Times.Never());
-        _stubs
+        _uow.BugRepository.VerifyAddAsync(Times.Never());
+        _uow
             .VerifyBeginTransaction(Times.Never())
             .VerifyCommitTransaction(Times.Never())
             .VerifySaveChangesAsync(Times.Never())
@@ -89,12 +90,12 @@ public class CreateBugHandlerTest
     public async Task Run_CreateBugHandler_Throw_Exception_Async()
     {
         //arrange
-        var request = new CreateBugRequestMock().Generate();
+        var request = new CreateBugRequestFixture().Generate();
 
-        _stubs.BugRepository
+        _uow.BugRepository
             .SetupAddAsync(new Exception("Test Excption"));
 
-        _stubs
+        _uow
             .SetupBeginTransaction()
             .SetupRollbackTransaction();
 
@@ -108,8 +109,8 @@ public class CreateBugHandlerTest
         Assert.NotNull(response.InnerException);
 
 
-        _stubs.BugRepository.VerifyAddAsync(Times.Once());
-        _stubs
+        _uow.BugRepository.VerifyAddAsync(Times.Once());
+        _uow
             .VerifyBeginTransaction(Times.Once())
             .VerifyCommitTransaction(Times.Never())
             .VerifySaveChangesAsync(Times.Never())

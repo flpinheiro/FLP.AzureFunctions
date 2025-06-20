@@ -3,7 +3,8 @@
 using FLP.Application.Handlers.Bugs;
 using FLP.Application.Profiles;
 using FLP.Application.Requests.Bugs;
-using FLP.AzureFunction.UnitTest.Mocks.Models;
+using FLP.AzureFunction.UnitTest.Fixtures.Models;
+using FLP.AzureFunction.UnitTest.Mocks;
 using FLP.AzureFunction.UnitTest.Stubs;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -12,7 +13,7 @@ namespace FLP.AzureFunction.UnitTest.Tests.Handlres.Bugs;
 
 public class GetBugsHandlerTest
 {
-    private readonly UnitOfWorkStub _stub = new();
+    private readonly UnitOfWorkMock _uow = new();
     private readonly IMapper _mapper;
     private readonly Mock<ILogger<GetBugsHandler>> _logger = new();
 
@@ -20,7 +21,7 @@ public class GetBugsHandlerTest
     public GetBugsHandlerTest()
     {
         _mapper = IMapperStub.GetMapper(new BugProfile());
-        _handler = new GetBugsHandler(_stub.Object, _mapper, _logger.Object);
+        _handler = new GetBugsHandler(_uow.Object, _mapper, _logger.Object);
     }
 
     [Theory]
@@ -30,10 +31,10 @@ public class GetBugsHandlerTest
     {
         // Arrange
         var request = new GetBugsRequest();
-        var bugs = new BugMock().Generate(count);
+        var bugs = new BugFixture().Generate(count);
 
-        _stub.BugRepository.SetupGetAsync(bugs);
-        _stub.BugRepository.SetupCountAsync(count);
+        _uow.BugRepository.SetupGetAsync(bugs);
+        _uow.BugRepository.SetupCountAsync(count);
 
         // Act
         var result = await _handler.Handle(request, CancellationToken.None);
@@ -41,7 +42,7 @@ public class GetBugsHandlerTest
         // Assert
         Assert.NotNull(result);
         Assert.Equal(count, result.Total);
-        _stub.BugRepository.VerifyGetAsync(Times.Once());
-        _stub.BugRepository.VerifyCountAsync(Times.Once());
+        _uow.BugRepository.VerifyGetAsync(Times.Once());
+        _uow.BugRepository.VerifyCountAsync(Times.Once());
     }
 }

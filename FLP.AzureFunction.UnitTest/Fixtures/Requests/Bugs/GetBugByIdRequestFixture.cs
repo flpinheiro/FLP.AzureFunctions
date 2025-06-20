@@ -1,15 +1,15 @@
 ﻿using FLP.Application.Requests.Bugs;
 
-namespace FLP.AzureFunction.UnitTest.Mocks.Requests.Bugs;
+namespace FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
 
-internal class GetBugByIdRequestMock : BasicMock<GetBugByIdRequest>
+internal class GetBugByIdRequestFixture : BasicFixture<GetBugByIdRequest>
 {
-    public GetBugByIdRequestMock()
+    public GetBugByIdRequestFixture()
     {
         Faker.RuleFor(x => x.Id, f => f.Random.Guid())
             .CustomInstantiator(f => new GetBugByIdRequest(f.Random.Guid()));
     }
-    public GetBugByIdRequestMock WithId(Guid id)
+    public GetBugByIdRequestFixture WithId(Guid id)
     {
         Faker.RuleFor(x => x.Id, id);
         return this;

@@ -1,10 +1,10 @@
 ﻿using FLP.Application.Requests.Bugs;
 
-namespace FLP.AzureFunction.UnitTest.Mocks.Requests.Bugs;
+namespace FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
 
-internal class CreateBugRequestMock : BasicMock<CreateBugRequest>
+internal class CreateBugRequestFixture : BasicFixture<CreateBugRequest>
 {
-    public CreateBugRequestMock()
+    public CreateBugRequestFixture()
     {
         Faker.RuleFor(x => x.Title, f => f.Lorem.Sentence(3))
             .RuleFor(x => x.Description, f => f.Lorem.Sentences())
@@ -12,19 +12,19 @@ internal class CreateBugRequestMock : BasicMock<CreateBugRequest>
             .CustomInstantiator(f => new CreateBugRequest(f.Lorem.Sentence(3), f.Lorem.Sentences(), f.Random.Guid()));
     }
 
-    public CreateBugRequestMock WithTitle(string? title)
+    public CreateBugRequestFixture WithTitle(string? title)
     {
         Faker.RuleFor(x => x.Title, title);
         return this;
     }
 
-    public CreateBugRequestMock WithDescription(string? description)
+    public CreateBugRequestFixture WithDescription(string? description)
     {
         Faker.RuleFor(x => x.Description, description);
         return this;
     }
 
-    public CreateBugRequestMock WithAssignedToUserId(Guid? assignedToUserId)
+    public CreateBugRequestFixture WithAssignedToUserId(Guid? assignedToUserId)
     {
         Faker.RuleFor(x => x.AssignedToUserId, assignedToUserId);
         return this;

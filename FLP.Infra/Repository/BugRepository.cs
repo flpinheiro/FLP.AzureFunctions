@@ -1,7 +1,5 @@
-﻿using FLP.Core.Context.Constants;
-using FLP.Core.Context.Main;
+﻿using FLP.Core.Context.Main;
 using FLP.Core.Context.Query;
-using FLP.Core.Context.Shared;
 using FLP.Core.Interfaces.Repository;
 using FLP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +37,10 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
 
     private IQueryable<Bug> FilterBugsQuery(PaginatedBugQuery query)
     {
-        var queryable = _context.Bugs.OrderBy(x => x.CreatedAt).AsQueryable();
+        var queryable = _context.Bugs
+            .OrderByDescending(x => x.CreatedAt)
+            .AsNoTracking()
+            .AsQueryable();
         if (!string.IsNullOrEmpty(query.Query))
         {
             queryable = queryable.Where(x =>
