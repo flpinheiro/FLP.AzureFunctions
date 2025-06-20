@@ -1,5 +1,5 @@
 ﻿@FLP.AzureFunctions_HostAddress = http://localhost:7110
-
+@data = {{}}
 ### Create Bug Function
 # @name CreateBugFunction
 POST {{FLP.AzureFunctions_HostAddress}}/api/Bug
@@ -12,7 +12,7 @@ content-type: application/json
 }
 ### Get Bug By Id
 # $name GetBugByIdFunction
-GET {{FLP.AzureFunctions_HostAddress}}/api/Bug/{{CreateBugFunction.response.body.$.id}}
+GET {{FLP.AzureFunctions_HostAddress}}/api/Bug/{{CreateBugFunction.response.body.$.data.id}}
 
 ### Get paginated Bug
 # $name GetPaginatedBugFunction
@@ -23,7 +23,7 @@ GET {{FLP.AzureFunctions_HostAddress}}/api/Bug?page=1&pagesize=10
 PUT {{FLP.AzureFunctions_HostAddress}}/api/Bug
 content-type: application/json
 {
-    "Id": "{{CreateBugFunction.response.body.$.id}}",
+    "Id": "{{CreateBugFunction.response.body.$.data.id}}",
     "Title": "Sample Updated Bug",
     "Description": "This is a sample Updated bug description.",
     "Severity": "High",
@@ -32,4 +32,4 @@ content-type: application/json
 }
 ### Delete Bug Function
 # @name DeleteBugFunction
-DELETE {{FLP.AzureFunctions_HostAddress}}/api/Bug/{{CreateBugFunction.response.body.$.id}}
+DELETE {{FLP.AzureFunctions_HostAddress}}/api/Bug/{{CreateBugFunction.response.body.$.data.id}}

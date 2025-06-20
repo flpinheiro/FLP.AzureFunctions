@@ -10,9 +10,7 @@ public class BugProfile : Profile
     public BugProfile()
     {
         CreateMap<CreateBugRequest, Bug>();
-        CreateMap<Bug, CreateBugReponse>();
         CreateMap<Bug, GetBugByIdResponse>();
         CreateMap<Bug, GetBugResponse>();
-        CreateMap<Bug, UpdateBugResponse>();
     }
 }

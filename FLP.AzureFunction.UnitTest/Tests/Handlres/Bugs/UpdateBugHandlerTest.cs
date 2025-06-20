@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FLP.Application.Handlers.Bugs;
 using FLP.Application.Profiles;
+using FLP.Application.Responses.Bugs;
 using FLP.AzureFunction.UnitTest.Fixtures.Models;
 using FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
 using FLP.AzureFunction.UnitTest.Mocks;
@@ -56,17 +57,18 @@ public class UpdateBugHandlerTest
 
         //assert
         Assert.NotNull(response);
-        Assert.Equal(request.Id, response.Id);
-        Assert.Equal(request.Title, response.Title);
-        Assert.Equal(request.Description, response.Description);
-        Assert.Equal(request.Status, response.Status);
-        if (Bug.IsBugResolvedOrClosed(response.Status))
+        var result = Assert.IsType<GetBugByIdResponse>(response.Data);
+        Assert.Equal(request.Id, result.Id);
+        Assert.Equal(request.Title, result.Title);
+        Assert.Equal(request.Description, result.Description);
+        Assert.Equal(request.Status, result.Status);
+        if (Bug.IsBugResolvedOrClosed(result.Status))
         {
-            Assert.NotNull(response.ResolvedAt);
+            Assert.NotNull(result.ResolvedAt);
         }
         else
         {
-            Assert.Null(response.ResolvedAt);
+            Assert.Null(result.ResolvedAt);
         }
 
         _uow

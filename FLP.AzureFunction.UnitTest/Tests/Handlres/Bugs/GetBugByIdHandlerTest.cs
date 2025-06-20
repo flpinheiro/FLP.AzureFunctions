@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FLP.Application.Handlers.Bugs;
 using FLP.Application.Profiles;
+using FLP.Application.Responses.Bugs;
 using FLP.AzureFunction.UnitTest.Fixtures.Models;
 using FLP.AzureFunction.UnitTest.Fixtures.Requests.Bugs;
 using FLP.AzureFunction.UnitTest.Mocks;
@@ -34,10 +35,11 @@ public class GetBugByIdHandlerTest
         _uow.BugRepository.SetupGetByIdAsync(bug);
 
         // Act
-        var result = await _handler.Handle(request, CancellationToken.None);
+        var response = await _handler.Handle(request, CancellationToken.None);
 
         //// Assert
-        Assert.NotNull(result);
+        Assert.NotNull(response);
+        var result = Assert.IsType<GetBugByIdResponse>(response.Data);
         Assert.Equal(request.Id, result.Id);
         Assert.Equal(bug.Title, result.Title);
         Assert.Equal(bug.Description, result.Description);

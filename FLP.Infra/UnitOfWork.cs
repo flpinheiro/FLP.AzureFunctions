@@ -32,7 +32,10 @@ internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, La
     public void RollbackTransaction()
     {
         _logger.LogWarning($"Rolling back the current transaction with Tansaction Id: {_transaction?.TransactionId}");
-        _context.Database.RollbackTransaction();
+        if (_transaction != null)
+        {
+            _context.Database.RollbackTransaction();
+        }
         _logger.LogWarning($"Transaction rolled back successfully with Tansaction Id: {_transaction?.TransactionId}");
     }
 

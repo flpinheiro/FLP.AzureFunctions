@@ -2,15 +2,16 @@
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.Application.Validators.Bugs;
+using FLP.Core.Context.Shared;
 using FLP.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace FLP.Application.Handlers.Bugs;
 
-public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHandler> _logger) : IRequestHandler<GetBugsRequest, GetBugsResponse>
+public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHandler> _logger) : IRequestHandler<GetBugsRequest, BaseResponse<GetBugsResponse>>
 {
-    public async Task<GetBugsResponse> Handle(GetBugsRequest request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<GetBugsResponse>> Handle(GetBugsRequest request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("GetBugsHandler called with request: {@Request}", request);
 
@@ -19,7 +20,8 @@ public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHa
 
         if (!validationResult.IsValid)
         {
-            throw new ArgumentException("Validation failed: " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), nameof(request));
+            _logger.LogWarning("Validation failed for GetBugsRequest: {Errors}", validationResult.Errors);
+            return new BaseResponse<GetBugsResponse>(validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         // Retrieve bugs from the repository
@@ -30,6 +32,8 @@ public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHa
         // Map the bugs to response DTOs
         var response = _mapper.Map<IEnumerable<GetBugResponse>>(bugs);
 
-        return new GetBugsResponse(response, await count);
+        _logger.LogInformation("Mapped bugs to response DTOs: {@Response}", response);
+
+        return new BaseResponse<GetBugsResponse>(new GetBugsResponse(response, await count));
     }
 }

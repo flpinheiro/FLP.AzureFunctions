@@ -3,6 +3,7 @@
 using FLP.Application.Handlers.Bugs;
 using FLP.Application.Profiles;
 using FLP.Application.Requests.Bugs;
+using FLP.Application.Responses.Bugs;
 using FLP.AzureFunction.UnitTest.Fixtures.Models;
 using FLP.AzureFunction.UnitTest.Mocks;
 using FLP.AzureFunction.UnitTest.Stubs;
@@ -37,11 +38,14 @@ public class GetBugsHandlerTest
         _uow.BugRepository.SetupCountAsync(count);
 
         // Act
-        var result = await _handler.Handle(request, CancellationToken.None);
+        var response = await _handler.Handle(request, CancellationToken.None);
 
         // Assert
-        Assert.NotNull(result);
+        Assert.NotNull(response);
+        var result = Assert.IsType<GetBugsResponse>(response.Data);
         Assert.Equal(count, result.Total);
+        Assert.NotNull(result.Bugs);
+        Assert.Equal(count, result.Bugs.Count());
         _uow.BugRepository.VerifyGetAsync(Times.Once());
         _uow.BugRepository.VerifyCountAsync(Times.Once());
     }

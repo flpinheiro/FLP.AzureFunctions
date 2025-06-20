@@ -1,10 +1,11 @@
 ﻿using FLP.Application.Responses.Bugs;
 using FLP.Core.Context.Constants;
+using FLP.Core.Context.Shared;
 using MediatR;
 
 namespace FLP.Application.Requests.Bugs;
 
-public record UpdateBugRequest : IRequest<UpdateBugResponse>
+public record UpdateBugRequest : IRequest<BaseResponse<GetBugByIdResponse>>
 {
     public Guid Id { get; set; }
 

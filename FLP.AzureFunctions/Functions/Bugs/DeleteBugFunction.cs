@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace FLP.AzureFunctions.Bugs;
+namespace FLP.AzureFunctions.Functions.Bugs;
 
 public class DeleteBugFunction(ILogger<DeleteBugFunction> _logger, IMediator _mediator)
 {
@@ -15,22 +15,13 @@ public class DeleteBugFunction(ILogger<DeleteBugFunction> _logger, IMediator _me
     {
         _logger.LogInformation("C# HTTP trigger function processed a request to delete a bug with ID: {id}", id, req);
 
-        try
-        {
-            await _mediator.Send(new DeleteBugRequest(id), cancellationToken);
-        }
-        catch (NotFoundException ex)
-        {
-            _logger.LogError(ex, "Bug not found.");
-            return new NotFoundObjectResult("Bug not found.");
-        }
-        catch (Exception)
-        {
-            _logger.LogError("Bug with ID: {id} not found", id);
-            return new BadRequestObjectResult($"Bug with ID {id} not found or could not be deleted.");
-        }
+        var response = await _mediator.Send(new DeleteBugRequest(id), cancellationToken);
+
 
         _logger.LogInformation("Bug with ID: {id} deleted successfully.", id);
-        return new OkObjectResult($"Bug with Id: {id} deleted successfully.");
+        if (response is not null && response.IsSuccess)
+            return new OkObjectResult($"Bug with Id: {id} deleted successfully.");
+        else
+            return new BadRequestObjectResult(response);
     }
 }

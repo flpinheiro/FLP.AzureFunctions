@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FLP.Application.Handlers.Exceptions;
+using MediatR.Pipeline;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FLP.Application.Configurations;
 
@@ -15,7 +17,7 @@ public static class ApplicationConfigurationExtension
         // Add other application-specific configurations as needed
         //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationConfigurationExtension).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ApplicationConfiguration>());
-
+        services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(GlobalRequestExceptionHandler<,,>));
 
         services.AddAutoMapper(typeof(ApplicationConfiguration).Assembly);
 

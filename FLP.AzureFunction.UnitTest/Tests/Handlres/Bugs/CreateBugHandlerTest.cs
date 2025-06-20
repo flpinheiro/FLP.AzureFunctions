@@ -47,12 +47,12 @@ public class CreateBugHandlerTest
 
         //assert
         Assert.NotNull(response);
-        Assert.IsType<CreateBugReponse>(response);
-        Assert.Equal(bug.Title, response.Title);
-        Assert.Equal(bug.Description, response.Description);
-        Assert.Equal(bug.Id, response.Id);
-        Assert.Equal(bug.AssignedToUserId, response.AssignedToUserId);
-        Assert.Equal(bug.Status, response.Status);
+        var result = Assert.IsType<GetBugByIdResponse>(response.Data);
+        Assert.Equal(bug.Title, result.Title);
+        Assert.Equal(bug.Description, result.Description);
+        Assert.Equal(bug.Id, result.Id);
+        Assert.Equal(bug.AssignedToUserId, result.AssignedToUserId);
+        Assert.Equal(bug.Status, result.Status);
 
         _uow.BugRepository.VerifyAddAsync(Times.Once());
         _uow

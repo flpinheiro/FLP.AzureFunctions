@@ -1,5 +1,6 @@
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
+using FLP.AzureFunctions.Examples.Responses;
 using FLP.Core.Context.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Net;
 
-namespace FLP.AzureFunctions.Bugs;
+namespace FLP.AzureFunctions.Functions.Bugs;
 
 public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediator)
 {
@@ -19,39 +20,29 @@ public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediat
     [OpenApiParameter("PageSize", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "Page Size for pagination")]
     [OpenApiParameter("Query", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "Query for search")]
     [OpenApiParameter("Status", In = ParameterLocation.Query, Required = false, Type = typeof(BugStatus), Description = "Bug Status for search")]
-    [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(GetBugsResponse), Description = "The response message")]
+    [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(GetBugsResponse), Description = "The response message", Example = typeof(GetBugResponseExample))]
     public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Bug")] HttpRequest req, CancellationToken cancellationToken)
     {
         _logger.LogInformation("C# HTTP trigger function processed a paginated bug request.", req);
-        try
+
+        req.Query.TryGetValue("Page", out var page);
+        req.Query.TryGetValue("PageSize", out var pageSize);
+        req.Query.TryGetValue("Query", out var query);
+        req.Query.TryGetValue("Status", out var status);
+
+        var request = new GetBugsRequest()
         {
-            req.Query.TryGetValue("Page", out var page);
-            req.Query.TryGetValue("PageSize", out var pageSize);
-            req.Query.TryGetValue("Query", out var query);
-            req.Query.TryGetValue("Status", out var status);
+            Page = ParseInt(page, 1),
+            PageSize = ParseInt(pageSize, 10),
+            Query = query,
+            Status = ParseStatus(status),
+        };
 
-            var request = new GetBugsRequest()
-            {
-                Page = ParseInt(page, 1),
-                PageSize = ParseInt(pageSize, 10),
-                Query = query,
-                Status = ParseStatus(status),
-            };
-
-            var response = await _mediator.Send(request, cancellationToken);
-
+        var response = await _mediator.Send(request, cancellationToken);
+        if (response is not null && response.IsSuccess)
             return new OkObjectResult(response);
-        }
-        catch (ArgumentException ex)
-        {
-            _logger.LogError(ex, "Validation error occurred while processing the request.");
-            return new BadRequestObjectResult(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("An error occurred while processing the request.", ex);
-            return new BadRequestObjectResult("An error occurred while processing the request.");
-        }
+        else
+            return new BadRequestObjectResult(response);
     }
 
     private static int ParseInt(string? value, int defaultValue = 1)
