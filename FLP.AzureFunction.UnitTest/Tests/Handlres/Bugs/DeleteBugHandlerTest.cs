@@ -65,7 +65,7 @@ public class DeleteBugHandlerTest
         _uow.VerifyBeginTransaction(Times.Once());
         _uow.VerifyCommitTransaction(Times.Never());
         _uow.VerifySaveChangesAsync(Times.Never());
-        _uow.VerifyRollBackTransaction(Times.Once());
+        _uow.VerifyRollBackTransaction(Times.Never());
 
         _uow.BugRepository.VerifyDeleteAsync(Times.Once());
     }

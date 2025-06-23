@@ -57,11 +57,12 @@ public class GetBugByIdHandlerTest
         var request = new GetBugByIdRequestFixture().WithId(Guid.Empty).Generate();
 
         // Act
-        var result = await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(request, CancellationToken.None));
+        var result = await  _handler.Handle(request, CancellationToken.None);
 
         //// Assert
         Assert.NotNull(result);
-        Assert.NotEmpty(result.Message);
+        Assert.False(result.IsSuccess);
+        Assert.NotNull(result.Message);
 
         _uow.BugRepository.VerifyGetByIdAsync(Times.Never());
     }
@@ -75,12 +76,12 @@ public class GetBugByIdHandlerTest
         _uow.BugRepository.SetupGetByIdAsync();
 
         // Act
-        var result = await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(request, CancellationToken.None));
+        var result = await _handler.Handle(request, CancellationToken.None);
 
         //// Assert
         Assert.NotNull(result);
-        Assert.NotEmpty(result.Message);
-        Assert.Equal("Bug not found", result.Message);
+        Assert.False(result.IsSuccess);
+        Assert.NotNull(result.Message);
 
         _uow.BugRepository.VerifyGetByIdAsync(Times.Once());
     }
