@@ -31,7 +31,7 @@ public class GetBugsHandlerTest
     public async Task Run_GetPaginatedBug_Async(int count)
     {
         // Arrange
-        var request = new GetBugsRequest();
+        var request = new GetBugsPaginatedRequest();
         var bugs = new BugFixture().Generate(count);
 
         _uow.BugRepository.SetupGetAsync(bugs);
@@ -42,7 +42,7 @@ public class GetBugsHandlerTest
 
         // Assert
         Assert.NotNull(response);
-        var result = Assert.IsType<GetBugsResponse>(response.Data);
+        var result = Assert.IsType<GetBugsPaginatedResponse>(response.Data);
         Assert.Equal(count, result.Total);
         Assert.NotNull(result.Bugs);
         Assert.Equal(count, result.Bugs.Count());

@@ -31,14 +31,14 @@ public class GetBugByIdHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBug
         if (!validationResult.IsValid)
         {
             _logger.LogWarning("Validation failed for GetBugByIdRequest: {Errors}", validationResult.Errors);
-            return new BaseResponse<GetBugByIdResponse>(validationResult.Errors.Select(e => e.ErrorMessage));
+            return new BaseResponse<GetBugByIdResponse>(false, validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         var bug = await _uow.BugRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (bug == null)
         {
-            return new BaseResponse<GetBugByIdResponse>("Bug not found");
+            return new BaseResponse<GetBugByIdResponse>(false, "Bug not found");
         }
 
         _logger.LogInformation("Bug found with Id: {Id}", request.Id);

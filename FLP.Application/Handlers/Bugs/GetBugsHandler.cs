@@ -9,9 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FLP.Application.Handlers.Bugs;
 
-public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHandler> _logger) : IRequestHandler<GetBugsRequest, BaseResponse<GetBugsResponse>>
+public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHandler> _logger) : IRequestHandler<GetBugsPaginatedRequest, BaseResponse<GetBugsPaginatedResponse>>
 {
-    public async Task<BaseResponse<GetBugsResponse>> Handle(GetBugsRequest request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<GetBugsPaginatedResponse>> Handle(GetBugsPaginatedRequest request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("GetBugsHandler called with request: {@Request}", request);
 
@@ -21,7 +21,7 @@ public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHa
         if (!validationResult.IsValid)
         {
             _logger.LogWarning("Validation failed for GetBugsRequest: {Errors}", validationResult.Errors);
-            return new BaseResponse<GetBugsResponse>(validationResult.Errors.Select(e => e.ErrorMessage));
+            return new BaseResponse<GetBugsPaginatedResponse>(false,validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         // Retrieve bugs from the repository
@@ -34,6 +34,6 @@ public class GetBugsHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<GetBugsHa
 
         _logger.LogInformation("Mapped bugs to response DTOs: {@Response}", response);
 
-        return new BaseResponse<GetBugsResponse>(new GetBugsResponse(response, await count));
+        return new BaseResponse<GetBugsPaginatedResponse>(new GetBugsPaginatedResponse(response, await count));
     }
 }

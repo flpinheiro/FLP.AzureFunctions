@@ -33,7 +33,7 @@ public class DeleteBugHandler(IUnitOfWork _uow, /*IMapper _mapper,*/ ILogger<Del
         if (!validationResult.IsValid)
         {
             _logger.LogWarning("Validation failed for DeleteBugRequest: {Errors}", validationResult.Errors);
-            return new BaseResponse(validationResult.Errors.Select(e => e.ErrorMessage));
+            return new BaseResponse(false, validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         // Begin a transaction

@@ -23,11 +23,11 @@ public class CreateBugFunction(ILogger<CreateBugFunction> _logger, IMediator _me
     {
         _logger.LogInformation("C# HTTP trigger function processed a create bug request.", req);
 
-        var request = await req.DeserializeRequestBodyAsync<CreateBugRequest>();
+        var request = await req.DeserializeRequestBodyAsync<CreateBugRequest>(cancellationToken);
         if (request == null)
         {
             _logger.LogError("Deserialization of request body failed.");
-            return new BadRequestObjectResult("Invalid request body.");
+            return new BadRequestObjectResult(new BaseResponse(false, "Invalid request body."));
         }
 
         var response = await _mediator.Send(request, cancellationToken);

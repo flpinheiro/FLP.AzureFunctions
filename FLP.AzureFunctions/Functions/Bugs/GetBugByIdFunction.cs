@@ -1,6 +1,6 @@
 using FLP.Application.Responses.Bugs;
 using FLP.AzureFunctions.Examples.Responses;
-using FLP.Core.Exceptions;
+using FLP.Core.Context.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ namespace FLP.AzureFunctions.Functions.Bugs;
 public class GetBugByIdFunction(ILogger<GetBugByIdFunction> _logger, IMediator _mediator)
 {
     [Function(nameof(GetBugByIdFunction))]
-    [OpenApiResponseWithBody(contentType: "application/json", bodyType: typeof(GetBugByIdResponse), statusCode: HttpStatusCode.OK, Description = "The bug details were retrieved successfully.", Example = typeof(GetBugByIdResponseExample))]
+    [OpenApiResponseWithBody(contentType: "application/json", bodyType: typeof(BaseResponse<GetBugByIdResponse>), statusCode: HttpStatusCode.OK, Description = "The bug details were retrieved successfully.", Example = typeof(GetBugByIdResponseExample))]
     public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Bug/{id}")] HttpRequest req, Guid id, CancellationToken cancellationToken)
     {
         _logger.LogInformation("C# HTTP trigger function processed a Get Bug By Id request.", req);

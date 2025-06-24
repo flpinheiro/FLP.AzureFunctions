@@ -2,6 +2,7 @@ using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.AzureFunctions.Examples.Responses;
 using FLP.Core.Context.Constants;
+using FLP.Core.Context.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,14 @@ using System.Net;
 
 namespace FLP.AzureFunctions.Functions.Bugs;
 
-public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediator)
+public class GetBugsPaginatedFunction(ILogger<GetBugsPaginatedFunction> _logger, IMediator _mediator)
 {
-    [Function(nameof(GetBugsFunction))]
+    [Function(nameof(GetBugsPaginatedFunction))]
     [OpenApiParameter("Page", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "Page number for pagination")]
     [OpenApiParameter("PageSize", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "Page Size for pagination")]
     [OpenApiParameter("Query", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "Query for search")]
     [OpenApiParameter("Status", In = ParameterLocation.Query, Required = false, Type = typeof(BugStatus), Description = "Bug Status for search")]
-    [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(GetBugsResponse), Description = "The response message", Example = typeof(GetBugResponseExample))]
+    [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(BaseResponse<GetBugsPaginatedResponse>), Description = "The response message", Example = typeof(GetBugResponseExample))]
     public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "Bug")] HttpRequest req, CancellationToken cancellationToken)
     {
         _logger.LogInformation("C# HTTP trigger function processed a paginated bug request.", req);
@@ -30,7 +31,7 @@ public class GetBugsFunction(ILogger<GetBugsFunction> _logger, IMediator _mediat
         req.Query.TryGetValue("Query", out var query);
         req.Query.TryGetValue("Status", out var status);
 
-        var request = new GetBugsRequest()
+        var request = new GetBugsPaginatedRequest()
         {
             Page = ParseInt(page, 1),
             PageSize = ParseInt(pageSize, 10),

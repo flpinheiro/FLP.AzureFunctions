@@ -24,7 +24,7 @@ public class UpdateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<UpdateB
         if (!validationResult.IsValid)
         {
             _logger.LogWarning("Validation failed for UpdateBugRequest: {Errors}", validationResult.Errors);
-            return new BaseResponse<GetBugByIdResponse>(validationResult.Errors.Select(e => e.ErrorMessage));
+            return new BaseResponse<GetBugByIdResponse>(false,validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         _uow.BeginTransaction(cancellationToken);
@@ -34,7 +34,7 @@ public class UpdateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<UpdateB
         if (bug == null)
         {
             _logger.LogWarning("Bug with ID: {BugId} not found for update.", request.Id);
-            return new BaseResponse<GetBugByIdResponse>($"Bug with ID {request.Id} not found.");
+            return new BaseResponse<GetBugByIdResponse>(false,$"Bug with ID {request.Id} not found.");
         }
         // Map the request to the bug entity
         bug.Title = request.Title ?? bug.Title;

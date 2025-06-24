@@ -17,7 +17,7 @@ public record BaseResponse<T> : BaseResponse, IBaseResponse<T>
     /// fail response constructor
     /// </summary>
     /// <param name="message"></param>
-    public BaseResponse(params IEnumerable<string> message) : base(message)
+    public BaseResponse(bool isSuccess = true, params IEnumerable<string> message) : base(isSuccess, message)
     {
         Data = default;
     }
@@ -29,18 +29,18 @@ public record BaseResponse : IBaseResponse
     /// <summary>
     /// success response constructor
     /// </summary>
-    public BaseResponse()
+    public BaseResponse(bool isSuccess = true)
     {
-        IsSuccess = true;
+        IsSuccess = isSuccess;
         Message = [];
     }
     /// <summary>
     /// fail response constructor
     /// </summary>
     /// <param name="message">fail message</param>
-    public BaseResponse(params IEnumerable<string> message)
+    public BaseResponse(bool isSuccess, params IEnumerable<string> message)
     {
-        IsSuccess = false;
+        IsSuccess = isSuccess;
         Message = message ?? [];
     }
     public IEnumerable<string>? Message { get; set; }

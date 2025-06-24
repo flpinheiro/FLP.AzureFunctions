@@ -9,4 +9,4 @@ public record GetBugResponse
     public BugStatus Status { get; set; }
 }
 
-public record GetBugsResponse(IEnumerable<GetBugResponse> Bugs, int Total);
+public record GetBugsPaginatedResponse(IEnumerable<GetBugResponse> Bugs, int Total);

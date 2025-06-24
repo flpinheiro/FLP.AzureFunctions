@@ -22,7 +22,7 @@ public class CreateBugHandler(IUnitOfWork _uow, IMapper _mapper, ILogger<CreateB
         if (!validationResult.IsValid)
         {
             _logger.LogWarning("Validation failed for CreateBugRequest: {Errors}", validationResult.Errors);
-            return new BaseResponse<GetBugByIdResponse>(validationResult.Errors.Select(e => e.ErrorMessage));
+            return new BaseResponse<GetBugByIdResponse>(false,validationResult.Errors.Select(e => e.ErrorMessage));
         }
 
         // Map the request to a domain entity

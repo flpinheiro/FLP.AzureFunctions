@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace FLP.Application.Validators.Bugs;
 
-internal class GetBugsValidator : AbstractValidator<GetBugsRequest>
+internal class GetBugsValidator : AbstractValidator<GetBugsPaginatedRequest>
 {
     public GetBugsValidator()
     {

@@ -5,4 +5,4 @@ using MediatR;
 
 namespace FLP.Application.Requests.Bugs;
 
-public record GetBugsRequest : PaginatedBugQuery, IRequest<BaseResponse<GetBugsResponse>>;
+public record GetBugsPaginatedRequest : PaginatedBugQuery, IRequest<BaseResponse<GetBugsPaginatedResponse>>;
