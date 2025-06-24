@@ -224,11 +224,11 @@ var assemblies = [
       { "name": "FLP.Application.Requests.Bugs.CreateBugRequest", "rp": "FLP.Application_CreateBugRequest.html", "cl": 9, "ucl": 1, "cal": 10, "tl": 18, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Requests.Bugs.DeleteBugRequest", "rp": "FLP.Application_DeleteBugRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 6, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Requests.Bugs.GetBugByIdRequest", "rp": "FLP.Application_GetBugByIdRequest.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Application.Requests.Bugs.GetBugsRequest", "rp": "FLP.Application_GetBugsRequest.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Application.Requests.Bugs.GetBugsPaginatedRequest", "rp": "FLP.Application_GetBugsPaginatedRequest.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Requests.Bugs.UpdateBugRequest", "rp": "FLP.Application_UpdateBugRequest.html", "cl": 5, "ucl": 1, "cal": 6, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Responses.Bugs.GetBugByIdResponse", "rp": "FLP.Application_GetBugByIdResponse.html", "cl": 6, "ucl": 1, "cal": 7, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Responses.Bugs.GetBugResponse", "rp": "FLP.Application_GetBugResponse.html", "cl": 3, "ucl": 1, "cal": 4, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Application.Responses.Bugs.GetBugsResponse", "rp": "FLP.Application_GetBugsResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Application.Responses.Bugs.GetBugsPaginatedResponse", "rp": "FLP.Application_GetBugsPaginatedResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Validators.Bugs.CreateBugValidator", "rp": "FLP.Application_CreateBugValidator.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Validators.Bugs.DeleteBugValidator", "rp": "FLP.Application_DeleteBugValidator.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Application.Validators.Bugs.GetBugByIdValidator", "rp": "FLP.Application_GetBugByIdValidator.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -236,36 +236,14 @@ var assemblies = [
       { "name": "FLP.Application.Validators.Bugs.UpdateBugValidator", "rp": "FLP.Application_UpdateBugValidator.html", "cl": 22, "ucl": 0, "cal": 22, "tl": 35, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
-    "name": "FLP.AzureFunctions",
-    "classes": [
-      { "name": "FLP.AzureFunctions.DirectFunctionExecutor", "rp": "FLP.AzureFunctions_DirectFunctionExecutor.html", "cl": 0, "ucl": 47, "cal": 47, "tl": 74, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Examples.Requests.CreateBugRequestExample", "rp": "FLP.AzureFunctions_CreateBugRequestExample.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Examples.Requests.UpdateBugRequestExample", "rp": "FLP.AzureFunctions_UpdateBugRequestExample.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Examples.Responses.BaseResponseExample", "rp": "FLP.AzureFunctions_BaseResponseExample.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 40, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Examples.Responses.GetBugByIdResponseExample", "rp": "FLP.AzureFunctions_GetBugByIdResponseExample.html", "cl": 0, "ucl": 16, "cal": 16, "tl": 40, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Examples.Responses.GetBugResponseExample", "rp": "FLP.AzureFunctions_GetBugResponseExample.html", "cl": 0, "ucl": 20, "cal": 20, "tl": 32, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Extensions.HttpRequestExtensions", "rp": "FLP.AzureFunctions_HttpRequestExtensions.html", "cl": 0, "ucl": 18, "cal": 18, "tl": 28, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.FunctionExecutorAutoStartup", "rp": "FLP.AzureFunctions_FunctionExecutorAutoStartup.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 106, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.FunctionExecutorHostBuilderExtensions", "rp": "FLP.AzureFunctions_FunctionExecutorHostBuilderExtensions.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 91, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.FunctionMetadataProviderAutoStartup", "rp": "FLP.AzureFunctions_FunctionMetadataProviderAutoStartup.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 127, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Functions.Bugs.CreateBugFunction", "rp": "FLP.AzureFunctions_CreateBugFunction.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 41, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Functions.Bugs.DeleteBugFunction", "rp": "FLP.AzureFunctions_DeleteBugFunction.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 27, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Functions.Bugs.GetBugByIdFunction", "rp": "FLP.AzureFunctions_GetBugByIdFunction.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 30, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Functions.Bugs.GetBugsFunction", "rp": "FLP.AzureFunctions_GetBugsFunction.html", "cl": 0, "ucl": 31, "cal": 31, "tl": 65, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.Functions.Bugs.UpdateBubFunction", "rp": "FLP.AzureFunctions_UpdateBubFunction.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 41, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.GeneratedFunctionMetadataProvider", "rp": "FLP.AzureFunctions_GeneratedFunctionMetadataProvider.html", "cl": 0, "ucl": 64, "cal": 64, "tl": 93, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.AzureFunctions.WorkerHostBuilderFunctionMetadataProviderExtension", "rp": "FLP.AzureFunctions_WorkerHostBuilderFunctionMetadataProviderExtension.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 112, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Program", "rp": "FLP.AzureFunctions_Program.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 22, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-    ]},
-  {
     "name": "FLP.Core",
     "classes": [
       { "name": "FLP.Core.Context.Main.Bug", "rp": "FLP.Core_Bug.html", "cl": 20, "ucl": 3, "cal": 23, "tl": 52, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Core.Context.Query.PaginatedBugQuery", "rp": "FLP.Core_PaginatedBugQuery.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Core.Context.Query.PaginatedBugQuery", "rp": "FLP.Core_PaginatedBugQuery.html", "cl": 1, "ucl": 1, "cal": 2, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Context.Shared.BaseResponse", "rp": "FLP.Core_BaseResponse.html", "cl": 12, "ucl": 1, "cal": 13, "tl": 48, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Context.Shared.BaseResponse<T>", "rp": "FLP.Core_BaseResponse_1.html", "cl": 9, "ucl": 1, "cal": 10, "tl": 48, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Context.Shared.BasicModel<T>", "rp": "FLP.Core_BasicModel_1.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Core.Context.Shared.PaginatedQuery", "rp": "FLP.Core_PaginatedQuery.html", "cl": 2, "ucl": 2, "cal": 4, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Core.Context.Shared.PaginatedQuery", "rp": "FLP.Core_PaginatedQuery.html", "cl": 3, "ucl": 1, "cal": 4, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Exceptions.NotFoundException", "rp": "FLP.Core_NotFoundException.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
@@ -291,24 +269,6 @@ var riskHotspotMetrics = [
 ];
 
 var riskHotspots = [
-  {
-    "assembly": "FLP.AzureFunctions", "class": "FLP.AzureFunctions.DirectFunctionExecutor", "reportPath": "FLP.AzureFunctions_DirectFunctionExecutor.html", "methodName": "ExecuteAsync()", "methodShortName": "ExecuteAsync()", "fileIndex": 0, "line": 33,
-    "metrics": [
-      { "value": 110, "exceeded": true },
-      { "value": 10, "exceeded": false },
-    ]},
-  {
-    "assembly": "FLP.AzureFunctions", "class": "FLP.AzureFunctions.Functions.Bugs.CreateBugFunction", "reportPath": "FLP.AzureFunctions_CreateBugFunction.html", "methodName": "RunAsync()", "methodShortName": "RunAsync()", "fileIndex": 0, "line": 23,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
-    ]},
-  {
-    "assembly": "FLP.AzureFunctions", "class": "FLP.AzureFunctions.Functions.Bugs.UpdateBubFunction", "reportPath": "FLP.AzureFunctions_UpdateBubFunction.html", "methodName": "RunAsync()", "methodShortName": "RunAsync()", "fileIndex": 0, "line": 24,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
-    ]},
   {
     "assembly": "FLP.Infra", "class": "FLP.Infra.UnitOfWork", "reportPath": "FLP.Infra_UnitOfWork.html", "methodName": "RollbackTransaction()", "methodShortName": "RollbackTransaction()", "fileIndex": 0, "line": 33,
     "metrics": [
