@@ -16,7 +16,9 @@ GET {{FLP.AzureFunctions_HostAddress}}/api/Bug/{{CreateBugFunction.response.body
 
 ### Get paginated Bug
 # $name GetPaginatedBugFunction
-GET {{FLP.AzureFunctions_HostAddress}}/api/Bug?page=1&pagesize=10
+GET {{FLP.AzureFunctions_HostAddress}}/api/Bug?sort=asc
+#?page=1&pagesize=10
+#&Query=up&Status=1
 
 ### Update Bug Function
 # @name UpdateBugFunction

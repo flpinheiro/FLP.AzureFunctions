@@ -1,10 +1,15 @@
-﻿using FLP.Core.Context.Main;
+﻿using FLP.Core.Context.Constants;
+using FLP.Core.Context.Main;
 using FLP.Core.Context.Query;
 using FLP.Core.Exceptions;
+using FLP.Core.Extensions;
 using FLP.Core.Interfaces.Repository;
 using FLP.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace FLP.Infra.Repository;
 
@@ -36,28 +41,19 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
         }
     }
 
-    private IQueryable<Bug> FilterBugsQuery(PaginatedBugQuery query)
+    public IQueryable<Bug> FilterBugsQuery(PaginatedBugQuery query)
     {
-        var queryable = _context.Bugs
-            .OrderByDescending(x => x.CreatedAt)
+        return _context.Bugs
+            .Quering(query)
             .AsNoTracking()
             .AsQueryable();
-        if (!string.IsNullOrEmpty(query.Query))
-        {
-            queryable = queryable.Where(x =>
-            (x.Title != null && x.Title.Contains(query.Query)) || (x.Description != null && x.Description.Contains(query.Query)));
-        }
-        if (query.Status.HasValue)
-        {
-            queryable = queryable.Where(x => x.Status == query.Status);
-        }
-        return queryable;
     }
     public async Task<IEnumerable<Bug>> GetAsync(PaginatedBugQuery query, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        _logger.LogInformation("Retrieving all bugs from the repository.");
+        _logger.LogInformation("Retrieving bugs from the repository with {query}", query);
         return await FilterBugsQuery(query)
+            .Ordering(query)
             .Skip((query.Page - 1) * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
@@ -66,7 +62,7 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
     public async Task<int> CountAsync(PaginatedBugQuery query, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        _logger.LogInformation("Counting all bugs in the repository.");
+        _logger.LogInformation("Counting bugs in the repository with {query}", query);
         return await FilterBugsQuery(query).CountAsync(cancellationToken);
     }
 
@@ -84,5 +80,55 @@ internal class BugRepository(AppDbContext _context, ILogger<IBugRepository> _log
         await Task.FromResult(_context.Bugs.Update(bug));
         _logger.LogInformation("Bug with ID: {Id} updated successfully.", bug.Id);
         return bug;
+    }
+
+}
+internal static class BugRepositoryExtensions
+{
+    public static IOrderedQueryable<Bug> Ordering(this IQueryable<Bug> queryable, PaginatedBugQuery query)
+    {
+        return (query.SortBy?.ToLower()) switch
+        {
+            "title"
+            => query.SortOrder == SortOrder.Ascending ?
+            queryable.OrderBy(x => x.Title) :
+            queryable.OrderByDescending(x => x.Title),
+
+            "status"
+            => query.SortOrder == SortOrder.Ascending ?
+            queryable.OrderBy(x => x.Status) :
+            queryable.OrderByDescending(x => x.Status),
+
+            "resolvedat"
+            => query.SortOrder == SortOrder.Ascending ?
+            queryable.OrderBy(x => x.ResolvedAt) :
+            queryable.OrderByDescending(x => x.ResolvedAt),
+
+            _
+            => query.SortOrder == SortOrder.Ascending ?
+            queryable.OrderBy(x => x.CreatedAt) :
+            queryable.OrderByDescending(x => x.CreatedAt),
+        };
+    }
+
+    public static IQueryable<Bug> Quering(this IQueryable<Bug> queryable, PaginatedBugQuery query)
+    {
+        return queryable
+            .Where(FilterByStatus(query.Status))
+            .Where(FilterByQuery(query.Query));
+    }
+
+    private static Expression<Func<Bug, bool>> FilterByStatus(BugStatus? status)
+    {
+        return x =>
+            !status.HasValue || x.Status == status;
+    }
+
+    private static Expression<Func<Bug, bool>> FilterByQuery(string? query)
+    {
+        return x =>
+            string.IsNullOrEmpty(query) ||
+            (x.Title != null && x.Title.Contains(query)) ||
+            (x.Description != null && x.Description.Contains(query));
     }
 }

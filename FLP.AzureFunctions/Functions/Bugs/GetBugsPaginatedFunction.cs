@@ -1,6 +1,7 @@
 using FLP.Application.Requests.Bugs;
 using FLP.Application.Responses.Bugs;
 using FLP.AzureFunctions.Examples.Responses;
+using FLP.AzureFunctions.Extensions;
 using FLP.Core.Context.Constants;
 using FLP.Core.Context.Shared;
 using MediatR;
@@ -26,18 +27,7 @@ public class GetBugsPaginatedFunction(ILogger<GetBugsPaginatedFunction> _logger,
     {
         _logger.LogInformation("C# HTTP trigger function processed a paginated bug request.", req);
 
-        req.Query.TryGetValue("Page", out var page);
-        req.Query.TryGetValue("PageSize", out var pageSize);
-        req.Query.TryGetValue("Query", out var query);
-        req.Query.TryGetValue("Status", out var status);
-
-        var request = new GetBugsPaginatedRequest()
-        {
-            Page = ParseInt(page, 1),
-            PageSize = ParseInt(pageSize, 10),
-            Query = query,
-            Status = ParseStatus(status),
-        };
+        var request = req.GetBugsPaginatedRequest();
 
         var response = await _mediator.Send(request, cancellationToken);
         if (response is not null && response.IsSuccess)
@@ -46,21 +36,5 @@ public class GetBugsPaginatedFunction(ILogger<GetBugsPaginatedFunction> _logger,
             return new BadRequestObjectResult(response);
     }
 
-    private static int ParseInt(string? value, int defaultValue = 1)
-    {
-        if (string.IsNullOrEmpty(value) || !int.TryParse(value, out var result))
-        {
-            return defaultValue;
-        }
-        return result;
-    }
 
-    private static BugStatus? ParseStatus(string? value)
-    {
-        if (string.IsNullOrEmpty(value) || !Enum.TryParse<BugStatus>(value, true, out var result))
-        {
-            return null; // Default status if parsing fails
-        }
-        return result;
-    }
 }

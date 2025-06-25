@@ -5,11 +5,11 @@ namespace FLP.Core.Context.Constants;
 public enum BugStatus
 {
     [Description("Open")]
-    Open,
+    Open = 0,
     [Description("In Progress")]
-    InProgress,
+    InProgress = 1,
     [Description("Resolved")]
-    Resolved,
+    Resolved = 2,
     [Description("Closed")]
-    Closed,
+    Closed = 3,
 }

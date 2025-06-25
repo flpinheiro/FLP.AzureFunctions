@@ -2,9 +2,10 @@
 using FLP.Infra.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
+[assembly: ExcludeFromCodeCoverage]
 namespace FLP.Infra;
-
 internal class UnitOfWork(AppDbContext _context, ILogger<UnitOfWork> _logger, Lazy<IBugRepository> _bugRepository) : IUnitOfWork
 {
     private bool disposedValue = false;
