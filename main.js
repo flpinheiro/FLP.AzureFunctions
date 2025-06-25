@@ -243,19 +243,9 @@ var assemblies = [
       { "name": "FLP.Core.Context.Shared.BaseResponse", "rp": "FLP.Core_BaseResponse.html", "cl": 12, "ucl": 1, "cal": 13, "tl": 48, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Context.Shared.BaseResponse<T>", "rp": "FLP.Core_BaseResponse_1.html", "cl": 9, "ucl": 1, "cal": 10, "tl": 48, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Context.Shared.BasicModel<T>", "rp": "FLP.Core_BasicModel_1.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Core.Context.Shared.PaginatedQuery", "rp": "FLP.Core_PaginatedQuery.html", "cl": 3, "ucl": 1, "cal": 4, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Core.Context.Shared.PaginatedQuery", "rp": "FLP.Core_PaginatedQuery.html", "cl": 5, "ucl": 1, "cal": 6, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FLP.Core.Exceptions.NotFoundException", "rp": "FLP.Core_NotFoundException.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 8, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-    ]},
-  {
-    "name": "FLP.Infra",
-    "classes": [
-      { "name": "FLP.Infra.Configurations.InfraConfigurationExtension", "rp": "FLP.Infra_InfraConfigurationExtension.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 46, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.Data.AppDbContext", "rp": "FLP.Infra_AppDbContext.html", "cl": 0, "ucl": 15, "cal": 15, "tl": 37, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.Data.mappings.BugMapProfile", "rp": "FLP.Infra_BugMapProfile.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.Data.Migrations.AppDbContextModelSnapshot", "rp": "FLP.Infra_AppDbContextModelSnapshot.html", "cl": 0, "ucl": 38, "cal": 38, "tl": 60, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.Data.Migrations.InitialCreate", "rp": "FLP.Infra_InitialCreate.html", "cl": 0, "ucl": 60, "cal": 60, "tl": 101, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.Repository.BugRepository", "rp": "FLP.Infra_BugRepository.html", "cl": 0, "ucl": 62, "cal": 62, "tl": 88, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "FLP.Infra.UnitOfWork", "rp": "FLP.Infra_UnitOfWork.html", "cl": 0, "ucl": 45, "cal": 45, "tl": 86, "cb": 0, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FLP.Core.Extensions.PropertyHelper", "rp": "FLP.Core_PropertyHelper.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 21, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -270,13 +260,7 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
-    "assembly": "FLP.Infra", "class": "FLP.Infra.UnitOfWork", "reportPath": "FLP.Infra_UnitOfWork.html", "methodName": "RollbackTransaction()", "methodShortName": "RollbackTransaction()", "fileIndex": 0, "line": 33,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
-    ]},
-  {
-    "assembly": "FLP.Infra", "class": "FLP.Infra.UnitOfWork", "reportPath": "FLP.Infra_UnitOfWork.html", "methodName": "Dispose(System.Boolean)", "methodShortName": "Dispose(...)", "fileIndex": 0, "line": 54,
+    "assembly": "FLP.Core", "class": "FLP.Core.Extensions.PropertyHelper", "reportPath": "FLP.Core_PropertyHelper.html", "methodName": "GetPropertyName(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Object>>)", "methodShortName": "GetPropertyName(...)", "fileIndex": 0, "line": 8,
     "metrics": [
       { "value": 42, "exceeded": true },
       { "value": 6, "exceeded": false },
